@@ -18,7 +18,7 @@ import {
   validateSearchGitHubUsers,
 } from '../utils/validateInputs';
 
-import { handleValidationErrors } from '../middlewares/validationMiddleware';
+import { handleValidationErrors } from '../middlewares/validationMiddleware'; 
 
 const router = express.Router();
 
