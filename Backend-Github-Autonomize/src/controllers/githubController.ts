@@ -139,7 +139,7 @@ export const softDeleteGitHubUser = async (req: Request, res: Response): Promise
       sendResponse(res, 404, 'User not found');
       return;
     }
-
+ 
     sendResponse(res, 200, 'GitHub user soft deleted successfully', deletedUser);
   } catch (error) {
     console.error('Error soft deleting GitHub user: ', error);
