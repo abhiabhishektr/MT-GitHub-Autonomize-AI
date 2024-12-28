@@ -9,7 +9,7 @@ interface Env {
 }
 
 export const env: Env = {
-    MONGODB_URI: process.env.MONGODB_URI || 'mongodb://localhost:27017/MT-Github-Autonomize',
+    MONGODB_URI: process.env.MONGODB_URI || 'mongodb://localhost:27017',
     JWT_SECRET: process.env.JWT_SECRET || 'github.com/abhiabhishektr',
     PORT: process.env.PORT ? parseInt(process.env.PORT, 10) : 3000 
 };
