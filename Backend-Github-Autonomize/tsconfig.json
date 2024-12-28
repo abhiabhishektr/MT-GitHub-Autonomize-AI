@@ -10,6 +10,6 @@
     "forceConsistentCasingInFileNames": true,
     "typeRoots": ["src/types", "node_modules/@types"]
   },
-  "include": ["src/**/*"],                        
+  "include": ["src/**/*", "src/middlewares/validationMiddleware.ts"],                        
   "exclude": ["node_modules", "dist"]             
 }
