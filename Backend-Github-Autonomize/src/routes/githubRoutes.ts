@@ -26,17 +26,17 @@ const router = express.Router();
 // Save GitHub user data
 router.post('/save/:username', validateSaveGitHubUser, handleValidationErrors, saveGitHubUser);
 
-// Search GitHub users
-router.get('/search', validateSearchGitHubUsers, handleValidationErrors, searchGitHubUsers);
-
 // Find mutual followers
 router.get('/mutual-followers/:username', validateFindMutualFollowers, handleValidationErrors, findMutualFollowers);
 
-// Update GitHub user information
-router.put('/update/:username', validateUpdateGitHubUser, handleValidationErrors, updateGitHubUser);
+// Search GitHub users
+router.get('/search', validateSearchGitHubUsers, handleValidationErrors, searchGitHubUsers);
 
 // Soft delete GitHub user
 router.delete('/delete/:username', validateSoftDeleteGitHubUser, handleValidationErrors, softDeleteGitHubUser);
+
+// Update GitHub user information
+router.put('/update/:username', validateUpdateGitHubUser, handleValidationErrors, updateGitHubUser);
 
 // Get all GitHub users sorted by a field
 router.get('/all', validateGetAllGitHubUsers, handleValidationErrors, getAllGitHubUsers);

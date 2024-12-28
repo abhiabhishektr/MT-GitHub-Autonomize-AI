@@ -68,4 +68,8 @@ export const validateSearchGitHubUsers = [
     .optional()
     .isString()
     .withMessage('Location must be a string'),
+  query('name')
+    .optional()
+    .isString()
+    .withMessage('Name must be a string'),
 ];

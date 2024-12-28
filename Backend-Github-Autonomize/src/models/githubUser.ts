@@ -10,8 +10,7 @@ const githubUserSchema = new mongoose.Schema({
   following: { type: [String] }, // Array of users' usernames that they are following
   public_repos: { type: Number },
   public_gists: { type: Number },
-  created_at: { type: Date },
-  updated_at: { type: Date },
+  deleted: { type: Boolean, default: false },
 }, { timestamps: true });
 
 const GitHubUser = mongoose.model('GitHubUser', githubUserSchema);
