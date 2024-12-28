@@ -154,13 +154,13 @@ export const updateGitHubUser = async (req: Request, res: Response): Promise<voi
 
   try {
     const updatedUser = await GitHubUser.findOneAndUpdate(
-      { username },
+      { username, deleted: false },
       { bio, location, blog },
       { new: true }
     );
 
     if (!updatedUser) {
-      sendResponse(res, 404, 'User not found');
+      sendResponse(res, 404, 'User not found or user is deleted');
       return;
     }
 
@@ -176,9 +176,9 @@ export const updateGitHubUser = async (req: Request, res: Response): Promise<voi
 // Get all GitHub users from DB sorted by a given field
 export const getAllGitHubUsers = async (req: Request, res: Response): Promise<void> => {
   const { sortBy } = req.query;
-
+  
   try {
-    const users = await GitHubUser.find().sort({ [sortBy as string]: 1 });
+    const users = await GitHubUser.find().sort({ [sortBy as string]: -1 });
     sendResponse(res, 200, 'GitHub users fetched successfully', users);
   } catch (error) {
     console.error('Error fetching GitHub users: ', error);
