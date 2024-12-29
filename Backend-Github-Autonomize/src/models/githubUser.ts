@@ -1,13 +1,14 @@
 import mongoose from 'mongoose';
 
 const githubUserSchema = new mongoose.Schema({
-  username: { type: String, required: true, unique: true },
+  login: { type: String, required: true, unique: true },
+  avatar_url: { type: String },
   name: { type: String },
   bio: { type: String },
   location: { type: String },
   blog: { type: String },
-  followers: { type: [String] }, // Array of followers' usernames
-  following: { type: [String] }, // Array of users' usernames that they are following
+  followers: { type: [String] }, 
+  following: { type: [String] }, 
   public_repos: { type: Number },
   public_gists: { type: Number },
   deleted: { type: Boolean, default: false },

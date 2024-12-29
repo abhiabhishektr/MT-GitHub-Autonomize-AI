@@ -22,11 +22,12 @@ export const saveGitHubUser = async (req: Request, res: Response): Promise<void>
 
     // Fetch user data from GitHub API
     const githubResponse = await axios.get(`https://api.github.com/users/${username}`);
-    const { login, name, bio, location, blog, followers, following, public_repos, public_gists, created_at } = githubResponse.data;
+    const { login, name, bio, location, blog, followers, following, public_repos, public_gists, created_at, avatar_url } = githubResponse.data;
 
     // Create new user entry in the database
     const newUser = new GitHubUser({
-      username: login,
+      login,
+      avatar_url,
       name,
       bio,
       location,
@@ -139,7 +140,7 @@ export const softDeleteGitHubUser = async (req: Request, res: Response): Promise
       sendResponse(res, 404, 'User not found');
       return;
     }
- 
+
     sendResponse(res, 200, 'GitHub user soft deleted successfully', deletedUser);
   } catch (error) {
     console.error('Error soft deleting GitHub user: ', error);
@@ -176,7 +177,7 @@ export const updateGitHubUser = async (req: Request, res: Response): Promise<voi
 // Get all GitHub users from DB sorted by a given field
 export const getAllGitHubUsers = async (req: Request, res: Response): Promise<void> => {
   const { sortBy } = req.query;
-  
+
   try {
     const users = await GitHubUser.find().sort({ [sortBy as string]: -1 });
     sendResponse(res, 200, 'GitHub users fetched successfully', users);
