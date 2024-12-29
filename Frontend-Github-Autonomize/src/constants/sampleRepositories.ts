@@ -7,6 +7,10 @@ export const SAMPLE_REPOSITORIES: Repository[] = [
     avatar_url: "https://randomuser.me/api/portraits/men/75.jpg",
     description: "An awesome project to showcase cool features.",
      html_url: "https://github.com/user/node-api",
+     stargazers_count: 100,
+     forks_count: 50,
+     watchers_count: 75,
+     language: "JavaScript",
   },
   {
     id: 102,
@@ -14,6 +18,10 @@ export const SAMPLE_REPOSITORIES: Repository[] = [
     avatar_url: "https://randomuser.me/api/portraits/men/75.jpg",
     description: "A personal portfolio website built using React.",
      html_url: "https://github.com/user/node-api",
+     stargazers_count: 100,
+     forks_count: 50,
+     watchers_count: 75,
+     language: "JavaScript",
   },
   {
     id: 103,
@@ -21,6 +29,10 @@ export const SAMPLE_REPOSITORIES: Repository[] = [
     avatar_url: "https://randomuser.me/api/portraits/men/75.jpg",
     description: "Reusable React components for your projects.",
      html_url: "https://github.com/user/node-api",
+     stargazers_count: 80,
+     forks_count: 40,
+     watchers_count: 60,
+     language: "TypeScript",
   },
   {
     id: 104,
@@ -28,6 +40,10 @@ export const SAMPLE_REPOSITORIES: Repository[] = [
     avatar_url: "https://randomuser.me/api/portraits/men/75.jpg",
     description: "A RESTful API built with Node.js and Express.",
      html_url: "https://github.com/user/node-api",
+     stargazers_count: 100,
+     forks_count: 50,
+     watchers_count: 75,
+     language: "JavaScript",
   },
   {
     id: 105,
@@ -35,5 +51,9 @@ export const SAMPLE_REPOSITORIES: Repository[] = [
     avatar_url: "https://randomuser.me/api/portraits/men/75.jpg",
     description: "Basic machine learning algorithms implemented in Python.",
      html_url: "https://github.com/user/node-api",
+     stargazers_count: 80,
+     forks_count: 40,
+     watchers_count: 60,
+     language: "Python",
   },
 ];
