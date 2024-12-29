@@ -6,16 +6,16 @@ import sendResponse from '../utils/response';
 
 export const welcome = async (req: Request, res: Response): Promise<void> => {
   try {
-      res.status(200).json({
-          status: "success",
-          message: "Welcome to the API! You have successfully connected. for better understanding check the documentation.",
-          documentation: "https://documenter.getpostman.com/view/31049459/2sAYJ6DLVZ",
-      });
+    res.status(200).json({
+      status: "success",
+      message: "Welcome to the API! You have successfully connected. for better understanding check the documentation.",
+      documentation: "https://documenter.getpostman.com/view/31049459/2sAYJ6DLVZ",
+    });
   } catch (error) {
-      res.status(500).json({
-          status: "error",
-          message: "An error occurred while processing your request.",
-      });
+    res.status(500).json({
+      status: "error",
+      message: "An error occurred while processing your request.",
+    });
   }
 };
 
@@ -30,7 +30,9 @@ export const saveGitHubUser = async (req: Request, res: Response): Promise<void>
 
     if (existingUser) {
       if (existingUser.deleted) {
-        sendResponse(res, 400, 'GitHub user is marked as deleted');
+        existingUser.deleted = false;
+        await existingUser.save();
+        sendResponse(res, 200, 'Deleted user added again', existingUser);
         return;
       }
       sendResponse(res, 200, 'User already exists in the database', existingUser);
@@ -80,7 +82,12 @@ export const findMutualFollowers = async (req: Request, res: Response): Promise<
   const { username } = req.params;
 
   try {
-    const user = await GitHubUser.findOne({ username });
+    const user = await GitHubUser.findOne({ login: username });
+
+    if (user?.deleted) {
+      sendResponse(res, 400, 'GitHub user is marked as deleted cannot find mutual followers');
+      return;
+    }
     if (!user) {
       sendResponse(res, 404, 'User not found or only the saved user can find mutual followers');
       return;
@@ -125,13 +132,13 @@ export const searchGitHubUsers = async (req: Request, res: Response): Promise<vo
 
   try {
     // Only include non-empty conditions
-    const conditions = [];
-    if (username) conditions.push({ username: { $regex: username, $options: 'i' } });
+    const conditions: any[] = [];
+    if (username) conditions.push({ login: { $regex: username, $options: 'i' } });
     if (location) conditions.push({ location: { $regex: location, $options: 'i' } });
     if (name) conditions.push({ name: { $regex: name, $options: 'i' } });
 
     // If no conditions, return all users
-    const query = conditions.length > 0 ? { $or: conditions } : {};
+    const query = conditions.length > 0 ? { $or: conditions, deleted: false } : { deleted: false };
 
     const users = await GitHubUser.find(query);
     sendResponse(res, 200, 'Search results', users);
@@ -148,13 +155,13 @@ export const softDeleteGitHubUser = async (req: Request, res: Response): Promise
 
   try {
     const deletedUser = await GitHubUser.findOneAndUpdate(
-      { username },
+      { login: username, deleted: false },
       { deleted: true },
       { new: true } // to return the updated doc 
     );
 
     if (!deletedUser) {
-      sendResponse(res, 404, 'User not found');
+      sendResponse(res, 404, 'User not found or already deleted');
       return;
     }
 
@@ -172,7 +179,7 @@ export const updateGitHubUser = async (req: Request, res: Response): Promise<voi
 
   try {
     const updatedUser = await GitHubUser.findOneAndUpdate(
-      { username, deleted: false },
+      { login: username, deleted: false },
       { bio, location, blog },
       { new: true }
     );
@@ -196,7 +203,7 @@ export const getAllGitHubUsers = async (req: Request, res: Response): Promise<vo
   const { sortBy } = req.query;
 
   try {
-    const users = await GitHubUser.find().sort({ [sortBy as string]: -1 });
+    const users = await GitHubUser.find({ deleted: false }).sort({ [sortBy as string]: -1 });
     sendResponse(res, 200, 'GitHub users fetched successfully', users);
   } catch (error) {
     console.error('Error fetching GitHub users: ', error);
