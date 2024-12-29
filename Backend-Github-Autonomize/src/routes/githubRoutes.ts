@@ -8,6 +8,7 @@ import {
   softDeleteGitHubUser,
   getAllGitHubUsers,
   searchGitHubUsers,
+  welcome
 } from '../controllers/githubController';
 import {
   validateSaveGitHubUser,
@@ -22,6 +23,7 @@ import { handleValidationErrors } from '../middlewares/validationMiddleware';
 
 const router = express.Router();
 
+router.get('/',welcome);
 
 // Save GitHub user data
 router.post('/save/:username', validateSaveGitHubUser, handleValidationErrors, saveGitHubUser);
@@ -47,10 +49,3 @@ export default router;
 
 
 
-//no validation for dev
-// router.post('/save/:username', saveGitHubUser);
-// router.get('/search', searchGitHubUsers);
-// router.get('/mutual-followers/:username', findMutualFollowers);
-// router.put('/update/:username', updateGitHubUser);
-// router.delete('/delete/:username', softDeleteGitHubUser);
-// router.get('/all', getAllGitHubUsers);

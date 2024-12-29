@@ -3,6 +3,23 @@ import axios from 'axios';
 import GitHubUser from '../models/githubUser';
 import sendResponse from '../utils/response';
 
+
+export const welcome = async (req: Request, res: Response): Promise<void> => {
+  try {
+      res.status(200).json({
+          status: "success",
+          message: "Welcome to the API! You have successfully connected. for better understanding check the documentation.",
+          documentation: "https://documenter.getpostman.com/view/31049459/2sAYJ6DLVZ",
+      });
+  } catch (error) {
+      res.status(500).json({
+          status: "error",
+          message: "An error occurred while processing your request.",
+      });
+  }
+};
+
+
 // Save GitHub user data
 export const saveGitHubUser = async (req: Request, res: Response): Promise<void> => {
   const { username } = req.params;
@@ -65,7 +82,7 @@ export const findMutualFollowers = async (req: Request, res: Response): Promise<
   try {
     const user = await GitHubUser.findOne({ username });
     if (!user) {
-      sendResponse(res, 404, 'User not found');
+      sendResponse(res, 404, 'User not found or only the saved user can find mutual followers');
       return;
     }
 
