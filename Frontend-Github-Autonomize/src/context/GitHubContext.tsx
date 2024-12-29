@@ -8,17 +8,24 @@ interface GitHubUser {
     avatar_url: string;
     name: string;
     bio: string;
+    following: number;
+    followers: number;
     location: string;
 }
 
 export interface Repository {
     id: number;
     name: string;
+    avatar_url: string;
     html_url: string;
     description: string;
+    stargazers_count: number;
+    forks_count: number;
+    watchers_count: number;
+    language: string;
 }
 
-interface Follower {
+export interface Follower {
     id: number;
     login: string;
     avatar_url: string;

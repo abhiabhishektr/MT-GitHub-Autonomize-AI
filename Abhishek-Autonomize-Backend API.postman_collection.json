@@ -1,0 +1,204 @@
+{
+	"info": {
+		"_postman_id": "51edcd32-05e8-4039-9c9a-c28ecc39e11a",
+		"name": "GitHub Backend API",
+		"description": "Postman collection for GitHub Backend API Autonomize AI  \nNote\n\n1. there are backend validation for every routes so use the repected querys , params ,body variables as mentioned in the documentation while checking for better results .\n    \n2. The live link : [https://projects.abhishektr.in/autonomize/api](https://projects.abhishektr.in/autonomize/api)  \n    Local link : [http://localhost:3000/api](http://localhost:3000/api)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31049459"
+	},
+	"item": [
+		{
+			"name": "Save GitHub User",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}"
+				},
+				"url": {
+					"raw": "{{base_url}}/save/{{username}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"save",
+						"{{username}}"
+					]
+				},
+				"description": "here we get the user data from github api and then save this to our local db to better performance"
+			},
+			"response": []
+		},
+		{
+			"name": "Find Mutual Followers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/mutual-followers/{{username}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"mutual-followers",
+						"{{username}}"
+					]
+				},
+				"description": "here the api will responde with the mutual friends of the given username"
+			},
+			"response": []
+		},
+		{
+			"name": "Search GitHub Users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/search?username={{username}}&location={{location}}&name={{name}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "{{username}}"
+						},
+						{
+							"key": "location",
+							"value": "{{location}}"
+						},
+						{
+							"key": "name",
+							"value": "{{name}}"
+						}
+					]
+				},
+				"description": "here we can search the users , by using any of the following condition"
+			},
+			"response": []
+		},
+		{
+			"name": "Soft Delete GitHub User",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/delete/{{username}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"delete",
+						"{{username}}"
+					]
+				},
+				"description": "this route will soft delete the user form db ."
+			},
+			"response": []
+		},
+		{
+			"name": "Update GitHub User",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"location\": \"San Francisco\",\n  \"bio\": \"Open-source enthusiast\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/update/{{username}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"update",
+						"{{username}}"
+					]
+				},
+				"description": "by using this route we can update any of the following routes  \nbio, location, blog  \njust want to send with in the body"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All GitHub Users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/all?sortBy=public_repos",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"all"
+					],
+					"query": [
+						{
+							"key": "sortBy",
+							"value": "public_repos"
+						}
+					]
+				},
+				"description": "you can use any of thise details to sort the response  \nsend the sort argument as the query within the url  \npublic_repos', 'public_gists', 'followers', 'following', 'created_at'"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:5000/api/github"
+		},
+		{
+			"key": "username",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "name",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "location",
+			"value": "",
+			"type": "default"
+		}
+	]
+}
