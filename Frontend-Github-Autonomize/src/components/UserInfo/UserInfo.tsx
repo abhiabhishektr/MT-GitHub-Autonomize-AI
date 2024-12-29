@@ -1,6 +1,6 @@
-// src/components/UserInfo.tsx
 import React from "react";
-import { useGitHub } from "../context/GitHubContext";
+import { useGitHub } from "../../context/GitHubContext";
+import './styles.css'
 
 const UserInfo: React.FC = () => {
   const { currentUser } = useGitHub();
@@ -8,7 +8,7 @@ const UserInfo: React.FC = () => {
   if (!currentUser) return null;
 
   return (
-    <div>
+    <div className="user-info-container">
       <img src={currentUser.avatar_url} alt={currentUser.name} />
       <h2>{currentUser.name}</h2>
       <p>{currentUser.bio}</p>

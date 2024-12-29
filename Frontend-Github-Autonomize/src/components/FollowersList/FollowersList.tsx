@@ -1,7 +1,7 @@
 // src/components/FollowersList.tsx
 
 import React, { useEffect, useState } from "react";
-import { useGitHub } from "../context/GitHubContext";
+import { useGitHub } from "../../context/GitHubContext";
 
 interface Follower {
   id: number;

@@ -9,7 +9,7 @@ export const saveGitHubUser = async (req: Request, res: Response): Promise<void>
 
   try {
     // Check if user already exists in the database
-    const existingUser = await GitHubUser.findOne({ username });
+    const existingUser = await GitHubUser.findOne({ login: username });
 
     if (existingUser) {
       if (existingUser.deleted) {
