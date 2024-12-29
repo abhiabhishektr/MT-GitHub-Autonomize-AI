@@ -4,7 +4,7 @@ import { SAMPLE_REPOSITORIES } from "../../constants/sampleRepositories";
 import './styles.css';
 
 const RepositoryList: React.FC = () => {
-    const { currentUser, fetchRepositories } = useGitHub();
+    const { currentUser, fetchRepositories,cache } = useGitHub();
     const [repos, setRepos] = useState<Repository[]>(SAMPLE_REPOSITORIES);
     const [selectedRepo, setSelectedRepo] = useState<Repository | null>(null);
 
@@ -22,6 +22,8 @@ const RepositoryList: React.FC = () => {
         setSelectedRepo(null);
     };
 
+    if ( Object.keys(cache).length === 0 )return <p></p>
+  
     if (!repos.length) return <p>No repositories found.</p>;
 
     return (

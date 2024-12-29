@@ -37,6 +37,7 @@ interface GitHubContextProps {
     fetchFollowers: (username: string) => Promise<Follower[]>;
     setCurrentUser: React.Dispatch<React.SetStateAction<GitHubUser | null>>;
     currentUser: GitHubUser | null;
+    cache: Record<string, any>;
 }
 
 // Create context
@@ -63,9 +64,15 @@ export const GitHubProvider = ({ children }: { children: ReactNode }) => {
     // Function to fetch data with caching
     const fetchData = async <T,>(key: string, apiCall: () => Promise<T>): Promise<T> => {
         if (cache[key]) return cache[key];
-        const data = await apiCall();
-        setCache((prev) => ({ ...prev, [key]: data }));
-        return data;
+        try {
+            const data = await apiCall();
+            setCache((prev) => ({ ...prev, [key]: data }));
+            return data;
+        } catch (error) {
+            alert("Error fetching data or user not found . Please try again later.");
+            throw error; // Rethrow the error after showing the alert
+        }
+
     };
 
     // Fetch user info
@@ -105,6 +112,7 @@ export const GitHubProvider = ({ children }: { children: ReactNode }) => {
                 fetchFollowers,
                 setCurrentUser,
                 currentUser,
+                cache,
             }}
         >
             {children}
